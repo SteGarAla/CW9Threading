@@ -1,21 +1,19 @@
 ﻿namespace CW9Threading
 {
 
-    //the first of two classes needed
+    
     public class FindPiThread
     {
-        //attributes
-
-        //Number of darts that will be thrown
-        int amountOfDartsNeedToThrow;
-        //Number of darts that have landed
-        int DartsLanded;
-        //will be used to generate throws
+   
+        //atrributes
+        int DartsToThrow;
+        int DartsThatLanded;
         Random random;
 
         public FindPiThread(int Darts2Throw)
         {
-            int rando = random.
+            random= new Random();
+            
         }
 
     }
@@ -51,7 +49,7 @@
 
 
 
-    //the second of the two programs needed
+    //The entry point of the program
     internal class Program
     {
         static void Main(string[] args)
