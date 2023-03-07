@@ -20,7 +20,7 @@
 
 
         //accessor which returns private attribute 'DartsThatLanded' 
-        public int NumDartsThatLanded()
+        public int GetNumDartsThatLanded()
         {
             return DartsThatLanded;
         }
@@ -59,25 +59,59 @@
             Console.WriteLine("Hello, How many Darts would you like to throw?");
             //we are going to parse the input and convert it to an int
             int NumberOfDarts = int.Parse(Console.ReadLine());
-            //this will be deleted, just for my testing purposes
-            Console.WriteLine(NumberOfDarts);
+            
 
             //asking the user for the amount of Threads
             Console.WriteLine("How many Threads would you like to run?");
             //we are going to parse the input and convert it to an int
             int NumberOfThreads = int.Parse(Console.ReadLine());
-            //this will be deleted, just for my testing purposes
-            Console.WriteLine(NumberOfThreads);
+            
 
-            //List syntax : List<type>[] nameOfList = new List<type>[capacity]
-            List<Thread>[] threads = new List<Thread>[NumberOfThreads];
-            List<FindPiThread>[] findPiThreads = new List<FindPiThread>[NumberOfThreads];
+            //List syntax : List<type> nameOfList = new List<type>(capacity)
+            List<Thread> threads = new List<Thread>(NumberOfThreads);
+            List<FindPiThread> findPiThreads = new List<FindPiThread>(NumberOfThreads);
 
 
-            //1st loop set up threads, 2nd main to wait for all threads to finish, 3rd collect results
 
-       
+            //first loop
+            for (int i = 0; i < NumberOfThreads; i++)
+            {
+                //creating FindPiThread object and passing in NumberOfDarts
+                FindPiThread piThreads = new FindPiThread(NumberOfDarts);
+                //adding our object into the list we created of FindPiThread
+                findPiThreads.Add(piThreads);
 
+                //creating a thread object and passing in Darts need to be thrown
+                Thread thread = new Thread(piThreads.ThrowDarts);
+                //adding our object into the list we created of Threads
+                threads.Add(thread);
+
+                //start the thread
+                thread.Start();
+                //tells main to sleep for 16 milliseconds
+                Thread.Sleep(16);
+            }
+
+            // for every element in threads which is of type Thread
+            foreach (Thread T in threads)
+            {
+                //we will perform .Join() on it
+                T.Join();
+            }
+
+            //This will be the total amount of darts landed for each FindPiThread
+            int totalLanded = 0;
+            foreach (FindPiThread FPT in findPiThreads)
+            {
+                //when we perform the getNumDartsThatLanded(), it is added to totalLanded
+                totalLanded += FPT.GetNumDartsThatLanded();
+            }
+
+            //evaluation of pi
+            double valOfPi = (4 * (totalLanded) / NumberOfDarts);
+
+            Console.WriteLine($"Value of pi: {valOfPi}");
+            Console.ReadLine();
         }
     }
 }
