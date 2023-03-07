@@ -1,4 +1,7 @@
-﻿namespace CW9Threading
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.ComponentModel;
+
+namespace CW9Threading
 {
 
     
@@ -25,6 +28,18 @@
             return DartsThatLanded;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
         //this method throws the amount of Darts request by the user 
         public void ThrowDarts()
         {
@@ -35,14 +50,32 @@
                 double coordX = random.Next(0, 1);
                 double coordY = random.Next(0, 1);
 
+
                 //Checking if hypotenuse of coordX and coordY is less than or equal to 1
-                if ((coordX * coordX) + (coordY * coordY) <= 1)
+                if (Math.Sqrt(Math.Pow(coordX, 2) + Math.Pow(coordY, 2)) <= 1)
                 {
                     //The dart has landed inside so we increment by 1
                     DartsThatLanded++;
                 }
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
@@ -107,10 +140,16 @@
                 totalLanded += FPT.GetNumDartsThatLanded();
             }
 
-            //evaluation of pi
-            double valOfPi = (4 * (totalLanded) / NumberOfDarts);
 
-            Console.WriteLine($"Value of pi: {valOfPi}");
+            double totalDarts = (NumberOfDarts * NumberOfThreads);
+
+            double landed = (4.0 * totalLanded);
+
+
+            double piValue = (double)(landed/ totalDarts);
+
+
+            Console.WriteLine($"Value of pi: {piValue}");
             Console.ReadLine();
         }
     }
