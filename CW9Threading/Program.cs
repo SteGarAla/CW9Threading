@@ -3,11 +3,8 @@ using System.ComponentModel;
 
 namespace CW9Threading
 {
-
-    
     public class FindPiThread
     {
-   
         //atrributes of the FindPiThread class
         private int DartsToThrow;
         private int DartsThatLanded;
@@ -21,24 +18,11 @@ namespace CW9Threading
             this.random = new Random();
         }
 
-
         //accessor which returns private attribute 'DartsThatLanded' 
         public int GetNumDartsThatLanded()
         {
             return DartsThatLanded;
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         //this method throws the amount of Darts request by the user 
         public void ThrowDarts()
@@ -47,8 +31,8 @@ namespace CW9Threading
             for (int i = 0; i < DartsToThrow; i++)
             {
                 //coordX and coordY are randomly generated doubles from (0,1)
-                double coordX = random.Next(0, 1);
-                double coordY = random.Next(0, 1);
+                double coordX = random.NextDouble();
+                double coordY = random.NextDouble();
 
 
                 //Checking if hypotenuse of coordX and coordY is less than or equal to 1
@@ -59,28 +43,7 @@ namespace CW9Threading
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-   
 
     //The entry point of the program
     internal class Program
@@ -103,8 +66,6 @@ namespace CW9Threading
             //List syntax : List<type> nameOfList = new List<type>(capacity)
             List<Thread> threads = new List<Thread>(NumberOfThreads);
             List<FindPiThread> findPiThreads = new List<FindPiThread>(NumberOfThreads);
-
-
 
             //first loop
             for (int i = 0; i < NumberOfThreads; i++)
@@ -140,16 +101,15 @@ namespace CW9Threading
                 totalLanded += FPT.GetNumDartsThatLanded();
             }
 
+            int totalDarts = NumberOfDarts * NumberOfThreads;
+            int landed = 4 * totalLanded;
 
-            double totalDarts = (NumberOfDarts * NumberOfThreads);
+            //work to get the pi value
+            double piValue = landed/ (double)totalDarts;
 
-            double landed = (4.0 * totalLanded);
-
-
-            double piValue = (double)(landed/ totalDarts);
-
-
-            Console.WriteLine($"Value of pi: {piValue}");
+            //our pi value
+            Console.WriteLine(piValue);
+            //will keep the program running
             Console.ReadLine();
         }
     }
